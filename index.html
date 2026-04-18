@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compra en tu barrio — Directorio de comercios</title>
+  <meta name="description" content="Encontrá los mejores comercios de Calzada y zona. Gastronomía, indumentaria, hogar, servicios e industria cerca tuyo.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 20 20" fill="none">
+        <path d="M10 2L13 8H17L14 12L15 18L10 15L5 18L6 12L3 8H7L10 2Z" fill="white"/>
+      </svg>
+    </div>
+    <div>
+      <div class="logo-name">Compra en Calzada</div>
+      <div class="logo-place">Adrogué · Buenos Aires</div>
+    </div>
+  </a>
+  <div class="nav-search">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+      <circle cx="7" cy="7" r="5"/><path d="M11 11l3 3" stroke-linecap="round"/>
+    </svg>
+    <input type="text" id="searchInput" placeholder="Buscar comercio o rubro...">
+  </div>
+</nav>
+
+<section class="hero">
+  <div>
+    <p class="hero-eyebrow">Directorio local · Calzada</p>
+    <h1 class="hero-title">Todo lo que<br>necesitás, <span>acá</span></h1>
+    <p class="hero-sub">Comercios locales de Calzada y zona. Apoyá a los comerciantes de tu barrio.</p>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-block">
+      <span class="stat-n" id="totalComerciosN" style="color:var(--gastro)">—</span>
+      <span class="stat-l">comercios</span>
+    </div>
+    <div class="stat-block">
+      <span class="stat-n" style="color:var(--indum)">6</span>
+      <span class="stat-l">categorías</span>
+    </div>
+  </div>
+</section>
+
+<section class="cat-section">
+  <p class="cat-section-title">Explorá por categoría</p>
+  <div class="cat-grid" id="catGrid"></div>
+</section>
+
+<section class="rubro-section" id="rubroSection">
+  <div class="rubro-header">
+    <button class="rubro-back" id="rubroBack" title="Volver">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <path d="M10 3L5 8l5 5"/>
+      </svg>
+    </button>
+    <h2 class="rubro-title" id="rubroTitle">Gastronomía</h2>
+  </div>
+  <div class="pills" id="pillsContainer"></div>
+  <div id="otrosHint"></div>
+  <div class="comercio-grid" id="comercioGrid"></div>
+</section>
+
+<footer class="footer">
+  <span class="footer-logo">Compra en Calzada</span>
+  <span>¿Tu comercio no está? <a href="mailto:hola@comprancalzada.com.ar" style="color:var(--text);text-decoration:underline">Sumalo gratis</a></span>
+  <span>Adrogué · Buenos Aires · 2025</span>
+</footer>
+
+<script>
+const CATS = [
+  {
+    id: "gastro", name: "Gastronomía", emoji: "🍽",
+    color: "var(--gastro)", bg: "var(--gastro-bg)", mid: "var(--gastro-mid)",
+    subs: ["Todos","Restaurantes","Rotiserías","Panaderías","Cafeterías","Pizzerías","Almacenes","Carnicerías","Verdulerías","Farmacias"],
+    comercios: [
+      { slug:"esquina-juan",  name:"La Esquina de Juan", rubro:"Restaurante", tag:"Abierto",  dir:"Av. Calzada 1240", emoji:"🥩", sheets:"" },
+      { slug:"pan-algo-mas",  name:"Pan & Algo Más",      rubro:"Panadería",   tag:"Abierto",  dir:"Rivadavia 540",    emoji:"🥐", sheets:"" },
+      { slug:"el-almacen",    name:"El Almacén",           rubro:"Almacén",     tag:"Abierto",  dir:"San Martín 88",    emoji:"🛒", sheets:"" },
+      { slug:"farmacia-cen",  name:"Farmacia Central",     rubro:"Farmacia",    tag:"24hs",     dir:"Av. Calzada 980",  emoji:"💊", sheets:"" },
+      { slug:"pizza-nostra",  name:"Pizza Nostra",          rubro:"Pizzería",    tag:"Abierto",  dir:"Belgrano 320",     emoji:"🍕", sheets:"" },
+      { slug:"fruteria-verde",name:"Frutería La Verde",    rubro:"Verdulería",  tag:"Abierto",  dir:"Moreno 210",       emoji:"🥦", sheets:"" },
+    ]
+  },
+  {
+    id: "indumentaria", name: "Indumentaria", emoji: "👕",
+    color: "var(--indum)", bg: "var(--indum-bg)", mid: "var(--indum-mid)",
+    subs: ["Todos","Ropa mujer","Ropa hombre","Ropa niños","Calzado","Deportiva","Accesorios","Telas y mercería"],
+    comercios: [
+      { slug:"estilo-nuestro",name:"Estilo Nuestro",     rubro:"Ropa mujer",  tag:"Nuevo",    dir:"Av. Calzada 560",  emoji:"👗", sheets:"" },
+      { slug:"zapateria-paso",name:"Zapatería El Paso",  rubro:"Calzado",     tag:"Abierto",  dir:"San Martín 430",   emoji:"👟", sheets:"" },
+      { slug:"bebe-vos",      name:"Bebé & Vos",          rubro:"Ropa niños",  tag:"Abierto",  dir:"Rivadavia 780",    emoji:"🧸", sheets:"" },
+      { slug:"sport-zone",    name:"Sport Zone",           rubro:"Deportiva",   tag:"Abierto",  dir:"Belgrano 100",     emoji:"⚽", sheets:"" },
+    ]
+  },
+  {
+    id: "hogar", name: "Hogar", emoji: "🏠",
+    color: "var(--hogar)", bg: "var(--hogar-bg)", mid: "var(--hogar-mid)",
+    subs: ["Todos","Ferretería","Bazar","Muebles","Electrodomésticos","Electrónica","Colchones","Cortinas","Cerrajería"],
+    comercios: [
+      { slug:"ferreteria-roca",name:"Ferretería Roca",   rubro:"Ferretería",  tag:"Abierto",  dir:"Av. Calzada 2100", emoji:"🔧", sheets:"" },
+      { slug:"casa-hogar",     name:"Casa & Hogar",       rubro:"Bazar",       tag:"Abierto",  dir:"San Martín 660",   emoji:"🏺", sheets:"" },
+      { slug:"tecno-calzada",  name:"TecnoCalzada",       rubro:"Electrónica", tag:"Abierto",  dir:"Rivadavia 1200",   emoji:"📱", sheets:"" },
+      { slug:"muebles-sur",    name:"Muebles del Sur",    rubro:"Muebles",     tag:"Abierto",  dir:"Moreno 890",       emoji:"🛋", sheets:"" },
+      { slug:"cerrajeria-24",  name:"Cerrajería 24",      rubro:"Cerrajería",  tag:"24hs",     dir:"Belgrano 450",     emoji:"🔑", sheets:"" },
+    ]
+  },
+  {
+    id: "servicios", name: "Servicios", emoji: "✂️",
+    color: "var(--servicios)", bg: "var(--servicios-bg)", mid: "var(--servicios-mid)",
+    subs: ["Todos","Peluquería","Estética","Veterinaria","Lavandería","Informática","Óptica","Educación","Fotografía"],
+    comercios: [
+      { slug:"barber-bros",    name:"Barber Bros",         rubro:"Barbería",    tag:"Turnos",   dir:"Av. Calzada 740",  emoji:"✂️", sheets:"" },
+      { slug:"vet-calzada",    name:"Veterinaria Calzada", rubro:"Veterinaria", tag:"Abierto",  dir:"San Martín 310",   emoji:"🐾", sheets:"" },
+      { slug:"pc-doctor",      name:"PC Doctor",            rubro:"Informática", tag:"Abierto",  dir:"Rivadavia 980",    emoji:"💻", sheets:"" },
+      { slug:"optica-sur",     name:"Óptica Sur",           rubro:"Óptica",      tag:"Abierto",  dir:"Belgrano 220",     emoji:"👓", sheets:"" },
+    ]
+  },
+  {
+    id: "industria", name: "Industria", emoji: "🔧",
+    color: "var(--industria)", bg: "var(--industria-bg)", mid: "var(--industria-mid)",
+    subs: ["Todos","Madereras","Metalúrgicas","Mecánicas","Gomería","Pinturería","Vidriería","Electricistas","Plomeros"],
+    comercios: [
+      { slug:"maderas-sur",    name:"Maderas del Sur",     rubro:"Maderera",    tag:"Mayorista",dir:"Ruta 3 km 24",     emoji:"🪵", sheets:"" },
+      { slug:"mecanica-gim",   name:"Mecánica Giménez",    rubro:"Mecánica",    tag:"Abierto",  dir:"Av. Calzada 3400", emoji:"🚗", sheets:"" },
+      { slug:"lamparas-cal",   name:"Lámparas Calzada",    rubro:"Iluminación", tag:"Fábrica",  dir:"Industrial 120",   emoji:"💡", sheets:"" },
+      { slug:"gomeria-eje",    name:"Gomería El Eje",       rubro:"Gomería",     tag:"Abierto",  dir:"Ruta 3 km 23",     emoji:"🛞", sheets:"" },
+    ]
+  },
+  {
+    id: "otros", name: "Otros", emoji: "📦",
+    color: "var(--otros)", bg: "var(--otros-bg)", mid: "var(--otros-mid)",
+    esOtros: true,
+    subs: ["Todos","Inmobiliarias","Salud","Financiero","Seguros","Entretenimiento","Sin categoría"],
+    comercios: [
+      { slug:"inmob-norte",    name:"Inmobiliaria Norte",  rubro:"Inmobiliaria",tag:"Abierto",  dir:"Av. Calzada 1450", emoji:"🏘", sheets:"" },
+      { slug:"centro-medico",  name:"Centro Médico",        rubro:"Salud",       tag:"Con turno",dir:"Rivadavia 300",    emoji:"🩺", sheets:"" },
+      { slug:"acopio-calzada", name:"Acopio Calzada",       rubro:"Sin categoría",tag:"Mayorista",dir:"Industrial 88",  emoji:"📦", sheets:"" },
+    ]
+  }
+];
+
+let activeCat = null;
+let activeSub = "Todos";
+
+function totalComercios() {
+  return CATS.reduce((s, c) => s + c.comercios.length, 0);
+}
+
+function renderCatGrid(filter = "") {
+  const grid = document.getElementById("catGrid");
+  grid.innerHTML = CATS.map((cat, i) => {
+    const filtered = filter
+      ? cat.comercios.filter(c =>
+          c.name.toLowerCase().includes(filter) ||
+          c.rubro.toLowerCase().includes(filter))
+      : cat.comercios;
+    if (filter && filtered.length === 0) return "";
+    return `<div class="cat-card${activeCat === cat.id ? " active" : ""}"
+      style="background:${cat.bg};animation-delay:${i * 0.04}s"
+      onclick="selectCat('${cat.id}')">
+      <span class="cat-emoji">${cat.emoji}</span>
+      <div class="cat-name" style="color:${cat.color}">${cat.name}</div>
+      <div class="cat-count" style="color:${cat.color}">${filter ? filtered.length : cat.comercios.length} comercios</div>
+    </div>`;
+  }).join("");
+}
+
+function renderRubroSection(cat, filter = "") {
+  const section = document.getElementById("rubroSection");
+  const title = document.getElementById("rubroTitle");
+  const pills = document.getElementById("pillsContainer");
+  const hint = document.getElementById("otrosHint");
+  const grid = document.getElementById("comercioGrid");
+
+  title.textContent = cat.emoji + "  " + cat.name;
+  title.style.color = cat.color;
+
+  pills.innerHTML = cat.subs.map(s =>
+    `<span class="pill${activeSub === s ? " active" : ""}"
+      style="${activeSub === s ? `background:${cat.mid};color:${cat.color};border-color:${cat.mid}` : ""}"
+      onclick="selectSub('${s}')">${s}</span>`
+  ).join("");
+
+  hint.innerHTML = cat.esOtros
+    ? `<div class="otros-hint">📦 Estos comercios todavía no tienen categoría asignada. Cuando haya suficientes del mismo rubro, van a tener su propia sección.</div>`
+    : "";
+
+  const shown = cat.comercios.filter(c => {
+    const matchSub = activeSub === "Todos" || c.rubro === activeSub;
+    const matchFilter = !filter || c.name.toLowerCase().includes(filter) || c.rubro.toLowerCase().includes(filter);
+    return matchSub && matchFilter;
+  });
+
+  grid.innerHTML = shown.map((c, i) =>
+    `<a class="comercio-card" href="comercio.html?slug=${c.slug}&cat=${cat.id}"
+      style="animation-delay:${i * 0.04}s">
+      <div class="comercio-thumb" style="background:${cat.bg}">
+        <span>${c.emoji}</span>
+        <span class="comercio-tag" style="background:${cat.mid};color:${cat.color}">${c.tag}</span>
+      </div>
+      <div class="comercio-body">
+        <div class="comercio-name">${c.name}</div>
+        <div class="comercio-rubro">${c.rubro}</div>
+        <div class="comercio-dir">
+          <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="7" r="3"/><path d="M8 2C5.2 2 3 4.2 3 7c0 4 5 9 5 9s5-5 5-9c0-2.8-2.2-5-5-5z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          ${c.dir}
+        </div>
+      </div>
+    </a>`
+  ).join("");
+
+  section.classList.add("visible");
+  section.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function selectCat(id) {
+  if (activeCat === id) {
+    activeCat = null;
+    activeSub = "Todos";
+    document.getElementById("rubroSection").classList.remove("visible");
+    renderCatGrid();
+    return;
+  }
+  activeCat = id;
+  activeSub = "Todos";
+  const cat = CATS.find(c => c.id === id);
+  renderCatGrid();
+  renderRubroSection(cat);
+}
+
+function selectSub(sub) {
+  activeSub = sub;
+  const cat = CATS.find(c => c.id === activeCat);
+  renderRubroSection(cat);
+}
+
+document.getElementById("rubroBack").addEventListener("click", () => {
+  activeCat = null;
+  activeSub = "Todos";
+  document.getElementById("rubroSection").classList.remove("visible");
+  renderCatGrid();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+document.getElementById("searchInput").addEventListener("input", e => {
+  const q = e.target.value.toLowerCase().trim();
+  renderCatGrid(q);
+  if (activeCat) {
+    const cat = CATS.find(c => c.id === activeCat);
+    renderRubroSection(cat, q);
+  }
+});
+
+document.getElementById("totalComerciosN").textContent = totalComercios();
+renderCatGrid();
+</script>
+</body>
+</html>
