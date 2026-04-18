@@ -1,8 +1,6 @@
-<!DOCTYPE html>
-<html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Compra en Calzada</title>
+  <title>Compra en tu barrio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="css/style.css">
@@ -10,40 +8,30 @@
 
 <body>
 
-<header class="header">
-  <div class="nav">
-
-    <div class="brand">Compra en Calzada</div>
-
-    <div class="search-container">
-      <input id="search" type="text" placeholder="Buscar productos, comercios y más...">
-    </div>
-
-    <div class="location">📍 Rafael Calzada</div>
-
-  </div>
+<h1>Compra en Calzada</h1>
+<p>Todo lo que necesitás, a pasos de tu casa</p>
+<header>
+  <div class="title">⭐ Compra en Calzada</div>
+  <input id="search" class="search" type="text" placeholder="Buscar comercio...">
 </header>
 
-<main class="main">
+<div class="container">
 
-  <section class="hero">
-    <div class="hero-content">
-      <h1>Encontrá todo en tu barrio</h1>
-      <p>Comercios de Rafael Calzada en un solo lugar</p>
-    </div>
-  </section>
+  <div class="hero">
+    <h1>Todo lo que necesitás,<br>a pasos de tu casa</h1>
+    <p>Encontrá comercios locales de Calzada y zona</p>
+  </div>
 
-  <section class="stats">
+  <div class="stats">
     <div class="stat" id="totalRubros">0 <span>rubros</span></div>
     <div class="stat" id="totalComercios">0 <span>comercios</span></div>
-  </section>
+  </div>
 
-  <section class="categories">
-    <h2>Categorías</h2>
-    <div id="rubros" class="grid"></div>
-  </section>
+<div id="stats"></div>
+<div id="rubros"></div>
+  <div id="rubros" class="grid"></div>
 
-</main>
+</div>
 
 <script src="data/config.js"></script>
 <script src="js/app.js"></script>
@@ -55,6 +43,11 @@ let comerciosGlobal = [];
   const data = await getComercios();
   comerciosGlobal = data;
 
+  document.getElementById("stats").innerHTML = `
+    <b>${data.length}</b> comercios
+  `;
+
+  // stats
   const rubros = [...new Set(data.map(c => c.rubro))];
 
   document.getElementById("totalRubros").innerHTML =
@@ -73,25 +66,40 @@ function renderRubros(rubros, data) {
   rubros.forEach(rubro => {
     const count = data.filter(c => c.rubro === rubro).length;
 
+    const div = document.createElement("div");
     const div = document.createElement("a");
     div.href = `rubro.html?rubro=${rubro}`;
     div.className = "card";
 
     div.innerHTML = `
-      <div class="card-image">
-        <img src="img/${rubro}.jpg" onerror="this.src='img/default.jpg'">
-      </div>
-
-      <div class="card-content">
+      <a href="rubro.html?rubro=${rubro}">
         <h3>${rubro}</h3>
+      <div class="card-content">
+        <h3>${getEmoji(rubro)} ${rubro}</h3>
         <p>${count} comercios</p>
+      </a>
       </div>
     `;
 
     container.appendChild(div);
   });
+})();
 }
 
+// emojis por rubro
+function getEmoji(rubro) {
+  const map = {
+    Gastronomia: "🍽",
+    Indumentaria: "👕",
+    Hogar: "🏠",
+    Servicios: "✂️",
+    Industria: "🔧",
+    Otros: "📦"
+  };
+  return map[rubro] || "🏪";
+}
+
+// búsqueda simple
 document.getElementById("search").addEventListener("input", e => {
   const value = e.target.value.toLowerCase();
 
@@ -105,4 +113,3 @@ document.getElementById("search").addEventListener("input", e => {
 </script>
 
 </body>
-</html>
