@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Compra en tu barrio</title>
+  <title>Compra en Calzada</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="css/style.css">
@@ -11,21 +11,25 @@
 <body>
 
 <header class="header">
-  <div class="header-top">
-    <div class="logo">🛍️ Compra en Calzada</div>
+  <div class="nav">
 
-    <input id="search" class="search" type="text" placeholder="Buscar comercios, rubros...">
+    <div class="brand">Compra en Calzada</div>
+
+    <div class="search-container">
+      <input id="search" type="text" placeholder="Buscar productos, comercios y más...">
+    </div>
 
     <div class="location">📍 Rafael Calzada</div>
+
   </div>
 </header>
 
-<div class="container">
+<main class="main">
 
   <section class="hero">
-    <div class="hero-text">
-      <h1>Comprá local, viví mejor</h1>
-      <p>Descubrí comercios de Rafael Calzada y alrededores</p>
+    <div class="hero-content">
+      <h1>Encontrá todo en tu barrio</h1>
+      <p>Comercios de Rafael Calzada en un solo lugar</p>
     </div>
   </section>
 
@@ -34,12 +38,12 @@
     <div class="stat" id="totalComercios">0 <span>comercios</span></div>
   </section>
 
-  <section>
-    <h2 class="section-title">Categorías</h2>
+  <section class="categories">
+    <h2>Categorías</h2>
     <div id="rubros" class="grid"></div>
   </section>
 
-</div>
+</main>
 
 <script src="data/config.js"></script>
 <script src="js/app.js"></script>
@@ -74,8 +78,11 @@ function renderRubros(rubros, data) {
     div.className = "card";
 
     div.innerHTML = `
+      <div class="card-image">
+        <img src="img/${rubro}.jpg" onerror="this.src='img/default.jpg'">
+      </div>
+
       <div class="card-content">
-        <div class="card-icon">${getEmoji(rubro)}</div>
         <h3>${rubro}</h3>
         <p>${count} comercios</p>
       </div>
@@ -83,18 +90,6 @@ function renderRubros(rubros, data) {
 
     container.appendChild(div);
   });
-}
-
-function getEmoji(rubro) {
-  const map = {
-    Gastronomia: "🍽",
-    Indumentaria: "👕",
-    Hogar: "🏠",
-    Servicios: "✂️",
-    Industria: "🔧",
-    Otros: "📦"
-  };
-  return map[rubro] || "🏪";
 }
 
 document.getElementById("search").addEventListener("input", e => {
