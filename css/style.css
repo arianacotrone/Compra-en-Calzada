@@ -1,3 +1,4 @@
+/* BASE */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -8,23 +9,34 @@ body {
 /* HEADER */
 header {
   background: white;
-  padding: 20px 30px;
+  padding: 18px 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #eee;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .title {
   font-size: 22px;
   font-weight: bold;
+  color: #0f2a44; /* toque marino */
 }
 
 .search {
-  padding: 12px 15px;
+  padding: 12px 18px;
   border-radius: 25px;
   border: 1px solid #ddd;
-  width: 240px;
+  width: 260px;
+  transition: 0.2s;
+}
+
+.search:focus {
+  outline: none;
+  border-color: #0f2a44;
+  box-shadow: 0 0 0 3px rgba(15,42,68,0.1);
 }
 
 /* CONTENIDO */
@@ -34,14 +46,20 @@ header {
   margin: auto;
 }
 
+/* HERO */
+.hero {
+  margin-bottom: 30px;
+}
+
 .hero h1 {
-  font-size: 40px;
+  font-size: 38px;
   margin-bottom: 10px;
 }
 
 .hero p {
   color: #666;
   margin-bottom: 30px;
+  font-size: 16px;
 }
 
 /* STATS */
@@ -54,7 +72,7 @@ header {
 .stat {
   font-size: 28px;
   font-weight: bold;
-  color: #e85d2a;
+  color: #0f2a44;
 }
 
 .stat span {
@@ -67,7 +85,7 @@ header {
 /* GRID */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 25px;
 }
 
@@ -75,16 +93,34 @@ header {
 .card {
   background: white;
   border-radius: 18px;
-  padding: 30px;
+  overflow: hidden;
   text-decoration: none;
   color: inherit;
   transition: all 0.2s ease;
   box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+  border: 1px solid #f0f0f0;
 }
 
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+  transform: translateY(-6px);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.1);
+}
+
+/* NUEVO: IMAGEN */
+.card-image {
+  height: 140px;
+  background: #eee;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* CONTENIDO */
+.card-content {
+  padding: 20px;
 }
 
 .card-content h3 {
@@ -96,11 +132,10 @@ header {
   color: #777;
 }
 
-
 /* LINK VOLVER */
 header a {
   text-decoration: none;
-  color: #e85d2a;
+  color: #0f2a44;
   font-weight: bold;
 }
 
