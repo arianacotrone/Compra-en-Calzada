@@ -1,0 +1,8 @@
+  calzada.jpg   ← foto real del centro (CLAVE)
+  Gastronomia.jpg
+  Indumentaria.jpg
+  Hogar.jpg
+  Servicios.jpg
+  Industria.jpg
+  Otros.jpg
+  default.jpg
