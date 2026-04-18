@@ -95,3 +95,21 @@ header {
 .card-content p {
   color: #777;
 }
+
+
+/* LINK VOLVER */
+header a {
+  text-decoration: none;
+  color: #e85d2a;
+  font-weight: bold;
+}
+
+/* TÍTULO RUBRO */
+h1 {
+  margin-bottom: 5px;
+}
+
+#cantidad {
+  color: #777;
+  margin-bottom: 25px;
+}
