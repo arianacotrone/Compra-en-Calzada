@@ -10,24 +10,34 @@
 
 <body>
 
-<header>
-  <div class="title">⭐ Compra en Calzada</div>
-  <input id="search" class="search" type="text" placeholder="Buscar comercio...">
+<header class="header">
+  <div class="header-top">
+    <div class="logo">🛍️ Compra en Calzada</div>
+
+    <input id="search" class="search" type="text" placeholder="Buscar comercios, rubros...">
+
+    <div class="location">📍 Rafael Calzada</div>
+  </div>
 </header>
 
 <div class="container">
 
-  <div class="hero">
-    <h1>Todo lo que necesitás,<br>a pasos de tu casa</h1>
-    <p>Encontrá comercios locales de Calzada y zona</p>
-  </div>
+  <section class="hero">
+    <div class="hero-text">
+      <h1>Comprá local, viví mejor</h1>
+      <p>Descubrí comercios de Rafael Calzada y alrededores</p>
+    </div>
+  </section>
 
-  <div class="stats">
+  <section class="stats">
     <div class="stat" id="totalRubros">0 <span>rubros</span></div>
     <div class="stat" id="totalComercios">0 <span>comercios</span></div>
-  </div>
+  </section>
 
-  <div id="rubros" class="grid"></div>
+  <section>
+    <h2 class="section-title">Categorías</h2>
+    <div id="rubros" class="grid"></div>
+  </section>
 
 </div>
 
@@ -41,7 +51,6 @@ let comerciosGlobal = [];
   const data = await getComercios();
   comerciosGlobal = data;
 
-  // stats
   const rubros = [...new Set(data.map(c => c.rubro))];
 
   document.getElementById("totalRubros").innerHTML =
@@ -66,7 +75,8 @@ function renderRubros(rubros, data) {
 
     div.innerHTML = `
       <div class="card-content">
-        <h3>${getEmoji(rubro)} ${rubro}</h3>
+        <div class="card-icon">${getEmoji(rubro)}</div>
+        <h3>${rubro}</h3>
         <p>${count} comercios</p>
       </div>
     `;
@@ -75,7 +85,6 @@ function renderRubros(rubros, data) {
   });
 }
 
-// emojis por rubro
 function getEmoji(rubro) {
   const map = {
     Gastronomia: "🍽",
@@ -88,7 +97,6 @@ function getEmoji(rubro) {
   return map[rubro] || "🏪";
 }
 
-// búsqueda simple
 document.getElementById("search").addEventListener("input", e => {
   const value = e.target.value.toLowerCase();
 
