@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <title>Compra en tu barrio</title>
@@ -8,11 +10,17 @@
 
 <body>
 
-<h1>Compra en Calzada</h1>
-<p>Todo lo que necesitás, a pasos de tu casa</p>
 <header>
   <div class="title">⭐ Compra en Calzada</div>
   <input id="search" class="search" type="text" placeholder="Buscar comercio...">
+<header class="header">
+  <div class="header-top">
+    <div class="logo">🛍️ Compra en Calzada</div>
+
+    <input id="search" class="search" type="text" placeholder="Buscar comercios, rubros...">
+
+    <div class="location">📍 Rafael Calzada</div>
+  </div>
 </header>
 
 <div class="container">
@@ -21,15 +29,25 @@
     <h1>Todo lo que necesitás,<br>a pasos de tu casa</h1>
     <p>Encontrá comercios locales de Calzada y zona</p>
   </div>
+  <section class="hero">
+    <div class="hero-text">
+      <h1>Comprá local, viví mejor</h1>
+      <p>Descubrí comercios de Rafael Calzada y alrededores</p>
+    </div>
+  </section>
 
   <div class="stats">
+  <section class="stats">
     <div class="stat" id="totalRubros">0 <span>rubros</span></div>
     <div class="stat" id="totalComercios">0 <span>comercios</span></div>
   </div>
+  </section>
 
-<div id="stats"></div>
-<div id="rubros"></div>
   <div id="rubros" class="grid"></div>
+  <section>
+    <h2 class="section-title">Categorías</h2>
+    <div id="rubros" class="grid"></div>
+  </section>
 
 </div>
 
@@ -42,10 +60,6 @@ let comerciosGlobal = [];
 (async () => {
   const data = await getComercios();
   comerciosGlobal = data;
-
-  document.getElementById("stats").innerHTML = `
-    <b>${data.length}</b> comercios
-  `;
 
   // stats
   const rubros = [...new Set(data.map(c => c.rubro))];
@@ -66,24 +80,21 @@ function renderRubros(rubros, data) {
   rubros.forEach(rubro => {
     const count = data.filter(c => c.rubro === rubro).length;
 
-    const div = document.createElement("div");
     const div = document.createElement("a");
     div.href = `rubro.html?rubro=${rubro}`;
     div.className = "card";
 
     div.innerHTML = `
-      <a href="rubro.html?rubro=${rubro}">
-        <h3>${rubro}</h3>
       <div class="card-content">
         <h3>${getEmoji(rubro)} ${rubro}</h3>
+        <div class="card-icon">${getEmoji(rubro)}</div>
+        <h3>${rubro}</h3>
         <p>${count} comercios</p>
-      </a>
       </div>
     `;
 
     container.appendChild(div);
   });
-})();
 }
 
 // emojis por rubro
@@ -113,3 +124,4 @@ document.getElementById("search").addEventListener("input", e => {
 </script>
 
 </body>
+</html>
