@@ -1,4 +1,3 @@
-/* BASE */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -6,140 +5,102 @@ body {
   color: #333;
 }
 
-/* HEADER (más limpio y moderno) */
+/* HEADER */
 header {
   background: white;
-  padding: 16px 30px;
+  padding: 20px 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #eee;
-  position: sticky;
-  top: 0;
-  z-index: 10;
 }
 
 .title {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: bold;
 }
 
-/* BUSCADOR más protagonista */
 .search {
-  padding: 12px 18px;
-  border-radius: 30px;
+  padding: 12px 15px;
+  border-radius: 25px;
   border: 1px solid #ddd;
-  width: 280px;
-  transition: 0.2s;
-}
-
-.search:focus {
-  border-color: #0a2540;
-  box-shadow: 0 0 0 3px rgba(10, 37, 64, 0.1);
-  outline: none;
+  width: 240px;
 }
 
 /* CONTENIDO */
 .container {
-  padding: 40px 20px;
+  padding: 40px;
   max-width: 1100px;
   margin: auto;
 }
 
-/* HERO más claro y vendible */
-.hero {
-  margin-bottom: 30px;
-}
-
 .hero h1 {
-  font-size: 36px;
+  font-size: 40px;
   margin-bottom: 10px;
 }
 
 .hero p {
   color: #666;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
-/* STATS más modernos */
+/* STATS */
 .stats {
   display: flex;
-  gap: 20px;
-  margin-bottom: 35px;
+  gap: 40px;
+  margin-bottom: 40px;
 }
 
 .stat {
-  background: white;
-  padding: 18px;
-  border-radius: 14px;
-  flex: 1;
-  font-size: 24px;
+  font-size: 28px;
   font-weight: bold;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+  color: #e85d2a;
 }
 
 .stat span {
   display: block;
-  font-size: 13px;
+  font-size: 14px;
   color: #777;
   font-weight: normal;
 }
 
-/* GRID más consistente */
+/* GRID */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
 }
 
-/* CARD (clave del cambio real) */
+/* CARD */
 .card {
   background: white;
-  border-radius: 16px;
+  border-radius: 18px;
+  padding: 30px;
   text-decoration: none;
   color: inherit;
-  overflow: hidden;
   transition: all 0.2s ease;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.05);
-  display: block;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
 }
 
 .card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 28px rgba(0,0,0,0.1);
-}
-
-/* IMAGEN (esto reemplaza emojis) */
-.card-image {
-  height: 140px;
-  background: #eee;
-}
-
-.card-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* CONTENIDO */
-.card-content {
-  padding: 18px;
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.1);
 }
 
 .card-content h3 {
-  font-size: 18px;
-  margin-bottom: 6px;
+  font-size: 20px;
+  margin-bottom: 8px;
 }
 
 .card-content p {
   color: #777;
-  font-size: 14px;
 }
+
 
 /* LINK VOLVER */
 header a {
   text-decoration: none;
-  color: #0a2540;
+  color: #e85d2a;
   font-weight: bold;
 }
 
