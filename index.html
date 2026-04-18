@@ -2,158 +2,47 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Compra en Calzada</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: #f5f5f5;
-      color: #333;
-    }
-
-    header {
-      background: white;
-      padding: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #ddd;
-    }
-
-    .title {
-      font-size: 22px;
-      font-weight: bold;
-    }
-
-    .search {
-      padding: 10px;
-      border-radius: 20px;
-      border: 1px solid #ccc;
-      width: 220px;
-    }
-
-    .container {
-      padding: 30px;
-    }
-
-    .hero h1 {
-      font-size: 36px;
-      margin-bottom: 10px;
-    }
-
-    .hero p {
-      color: #666;
-      margin-bottom: 20px;
-    }
-
-    .stats {
-      display: flex;
-      gap: 30px;
-      margin-bottom: 30px;
-    }
-
-    .stat {
-      font-size: 22px;
-      font-weight: bold;
-      color: #e85d2a;
-    }
-
-    .stat span {
-      display: block;
-      font-size: 14px;
-      color: #555;
-      font-weight: normal;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-    }
-
-    .card {
-      padding: 20px;
-      border-radius: 15px;
-      color: #333;
-    }
-
-    .card h3 {
-      margin: 10px 0 5px;
-    }
-
-    .card p {
-      margin: 0;
-      font-size: 14px;
-      color: #555;
-    }
-
-    /* Colores tipo */
-    .gastronomia { background: #f3ded6; }
-    .indumentaria { background: #dcdcf3; }
-    .hogar { background: #d7ebe3; }
-    .servicios { background: #f1d7de; }
-    .industria { background: #efe3c8; }
-    .otros { background: #e6e1db; }
-
-  </style>
+  <title>Compra en tu barrio</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
 
-<header>
-  <div class="title">⭐ Compra en Calzada</div>
-  <input class="search" type="text" placeholder="Buscar comercio...">
-</header>
+<h1>Compra en Calzada</h1>
+<p>Todo lo que necesitás, a pasos de tu casa</p>
 
-<div class="container">
+<div id="stats"></div>
+<div id="rubros"></div>
 
-  <div class="hero">
-    <h1>Todo lo que necesitás,<br>a pasos de tu casa</h1>
-    <p>Encontrá comercios locales de Calzada y zona</p>
-  </div>
+<script src="data/config.js"></script>
+<script src="js/app.js"></script>
 
-  <div class="stats">
-    <div class="stat">57 <span>rubros</span></div>
-    <div class="stat">26 <span>comercios</span></div>
-  </div>
+<script>
+(async () => {
+  const data = await getComercios();
 
-  <div class="grid">
+  document.getElementById("stats").innerHTML = `
+    <b>${data.length}</b> comercios
+  `;
 
-    <div class="card gastronomia">
-      <h3>🍽 Gastronomía</h3>
-      <p>6 comercios</p>
-    </div>
+  const rubros = [...new Set(data.map(c => c.rubro))];
 
-    <div class="card indumentaria">
-      <h3>👕 Indumentaria</h3>
-      <p>4 comercios</p>
-    </div>
+  const container = document.getElementById("rubros");
 
-    <div class="card hogar">
-      <h3>🏠 Hogar</h3>
-      <p>5 comercios</p>
-    </div>
+  rubros.forEach(rubro => {
+    const count = data.filter(c => c.rubro === rubro).length;
 
-    <div class="card servicios">
-      <h3>✂️ Servicios</h3>
-      <p>4 comercios</p>
-    </div>
+    const div = document.createElement("div");
+    div.innerHTML = `
+      <a href="rubro.html?rubro=${rubro}">
+        <h3>${rubro}</h3>
+        <p>${count} comercios</p>
+      </a>
+    `;
 
-    <div class="card industria">
-      <h3>🔧 Industria</h3>
-      <p>4 comercios</p>
-    </div>
-
-    <div class="card otros">
-      <h3>📦 Otros</h3>
-      <p>3 comercios</p>
-    </div>
-
-  </div>
-
-</div>
+    container.appendChild(div);
+  });
+})();
+</script>
 
 </body>
 </html>
