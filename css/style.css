@@ -1,4 +1,3 @@
-/* BASE */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -9,57 +8,62 @@ body {
 /* HEADER */
 header {
   background: white;
-  padding: 18px 30px;
+  padding: 20px 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #eee;
-  position: sticky;
-  top: 0;
-  z-index: 10;
 }
 
 .title {
   font-size: 22px;
   font-weight: bold;
-  color: #0f2a44; /* toque marino */
 }
 
 .search {
-  padding: 12px 18px;
+  padding: 12px 15px;
   border-radius: 25px;
   border: 1px solid #ddd;
-  width: 260px;
-  transition: 0.2s;
+  width: 240px;
 }
 
-.search:focus {
-  outline: none;
-  border-color: #0f2a44;
-  box-shadow: 0 0 0 3px rgba(15,42,68,0.1);
-}
-
-/* CONTENIDO */
+/* CONTENEDOR */
 .container {
-  padding: 40px;
+  padding: 30px;
   max-width: 1100px;
   margin: auto;
 }
 
-/* HERO */
+/* HERO MODERNO */
 .hero {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
   margin-bottom: 30px;
 }
 
+.hero-img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  filter: brightness(0.7);
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 30px;
+  color: white;
+}
+
 .hero h1 {
-  font-size: 38px;
+  font-size: 34px;
   margin-bottom: 10px;
 }
 
 .hero p {
-  color: #666;
-  margin-bottom: 30px;
-  font-size: 16px;
+  opacity: 0.9;
 }
 
 /* STATS */
@@ -79,7 +83,6 @@ header {
   display: block;
   font-size: 14px;
   color: #777;
-  font-weight: normal;
 }
 
 /* GRID */
@@ -96,20 +99,17 @@ header {
   overflow: hidden;
   text-decoration: none;
   color: inherit;
-  transition: all 0.2s ease;
+  transition: 0.2s;
   box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-  border: 1px solid #f0f0f0;
 }
 
 .card:hover {
-  transform: translateY(-6px);
+  transform: translateY(-5px);
   box-shadow: 0 14px 30px rgba(0,0,0,0.1);
 }
 
-/* NUEVO: IMAGEN */
 .card-image {
   height: 140px;
-  background: #eee;
 }
 
 .card-image img {
@@ -118,7 +118,6 @@ header {
   object-fit: cover;
 }
 
-/* CONTENIDO */
 .card-content {
   padding: 20px;
 }
@@ -130,21 +129,4 @@ header {
 
 .card-content p {
   color: #777;
-}
-
-/* LINK VOLVER */
-header a {
-  text-decoration: none;
-  color: #0f2a44;
-  font-weight: bold;
-}
-
-/* TÍTULO RUBRO */
-h1 {
-  margin-bottom: 5px;
-}
-
-#cantidad {
-  color: #777;
-  margin-bottom: 25px;
 }
