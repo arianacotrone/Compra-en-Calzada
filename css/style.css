@@ -29,17 +29,18 @@ header {
 
 /* CONTENEDOR */
 .container {
-  padding: 30px;
-  max-width: 1100px;
-  margin: auto;
+  width: 100%;
+  padding: 30px 60px;
 }
 
 /* HERO MODERNO */
 .hero {
   position: relative;
-  border-radius: 20px;
+  width: 100%;
+  height: 320px;
+  margin-bottom: 40px;
+  border-radius: 0; /* sacamos el efecto tarjeta */
   overflow: hidden;
-  margin-bottom: 30px;
 }
 
 .hero-img {
